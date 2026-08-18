@@ -1,4 +1,9 @@
-let router = require("express").Router()
+let router = require("express").Router();
+
+let productMidd = require("../middlewares/productMiddleware")
+// router level middleware
+router.use(productMidd);//it only call when the request is related to products routes
+
 
 router.post("/addproduct", (req, res) => {
     res.send("add product done")
@@ -18,7 +23,7 @@ router.get("/getproduct/:name/:price", (req, res) => {
 // /getproduct/bottle
 // /getproduct/pen
 
-router.get("/getAllproduct", (req, res) => {
+router.get("/getallproduct", (req, res) => {
     res.send("getallproduct done")
 })
 

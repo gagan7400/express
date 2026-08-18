@@ -1,6 +1,9 @@
 let express = require("express");
-const { register, login, logout } = require("../controllers/userController");
 let router = express.Router();
+let userMidd = require("../middlewares/userMiddleware")
+
+const { register, login, logout } = require("../controllers/userController");
+router.use(userMidd)
 
 router.post("/register", register);
 router.post("/login", login);
