@@ -25,15 +25,34 @@ let middleware = (req, res, next) => {
 
 // app.use(middleware) // it applies on every request comming on this server
 
-app.get("/getdata", middleware, (req, res) => {
-    res.send("hello world");
-})
-app.get("/getuser", (req, res) => {
-
+app.get("/getdata/:id", middleware, (req, res) => {
+    console.log(req.query, req.params, req.headers, req.body)
     res.send("hello world");
 })
 
+app.get("/normal", (req, res) => {
+    console.log("normal")
+    res.send("hello world");//text response
+})
+// // query/?rating=4.5&price=3000
 
+// {
+//     rating = 4.5,
+// price :3000  
+// }
+app.get("/query", (req, res) => {
+    console.log("query", req.query)
+    res.json({ sucess: true, message: "done" })
+})
+app.get("/paramater/:id", (req, res) => {
+    console.log("params", req.params)
+    res.send("hello world");
+})
+
+app.post("/add", (req, res) => {
+    console.log(req.body)
+    res.send("ok done")
+})
 
 app.use("/api/users/", userRoute);
 app.use("/api/products/", productRoute);
@@ -59,3 +78,9 @@ app.listen(8000, (err) => {
 // http://localhost:8000/api/products/addproduct
 // http://localhost:8000/api/products/getproduct
 // http://localhost:8000/api/products/updateproduct
+
+
+// http://localhost:8000/parameter/1
+// http://localhost:8000/parameter/2
+// http://localhost:8000/parameter/3
+// http://localhost:8000/parameter/4

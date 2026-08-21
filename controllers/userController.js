@@ -1,4 +1,5 @@
 let register = (req, res) => {
+    console.log(req.body)
     res.send("registration done")
 }
 let login = (req, res) => {

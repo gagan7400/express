@@ -9,6 +9,14 @@
 
 <body>
     <h3>This is the public file</h3>
+    <script>
+        fetch("http://localhost:8000/add", {
+            method: "POST",
+            body: "ddfvdf"
+        }).then((res) => {
+            return res.text();
+        }).then((result) => { console.log(result) })
+    </script>
 </body>
 
 </html>
