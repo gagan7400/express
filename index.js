@@ -2,6 +2,10 @@ let express = require("express");
 let cors = require("cors")
 let app = express();// express instance  
 
+let dotenv = require("dotenv");
+dotenv.config();
+
+
 let connectdb = require("./db/connectDB");
 connectdb(); //db connection setup
 
