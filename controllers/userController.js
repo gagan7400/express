@@ -1,23 +1,24 @@
 let db = require("../db/connectDB")
-
+let userModel = require("../models/userModel")
 let register = async (req, res) => {
 
-    let { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    let { name, email, password, state, mobilenumber } = req.body;
+    if (!name || !email || !password || !state || !mobilenumber) {
         return res.status(404).json({ success: false, message: "pls provide all the details" })
     }
 
-    res.status(200).json({ success: true, message: "registration done" })
+    let olduser = await userModel.findOne({ email });
+    if (olduser) {
+        return res.status(404).json({ success: false, message: "email already exist" })
+    }
+    let newuser = await userModel.insertOne({ name, email, password, state, mobilenumber })
+
+    // let newuser = await userModel.create({ name, email, password })
+    // await newuser.save();
+
+    res.status(200).json({ success: true, message: "registration done", data: newuser })
 }
 
-// to get some data :- collection.find().toArray();
-// to get some data :- collection.findOne({name:"raj"});
-// to add some data :- collection.insertOne({});
-// to add some data :- collection.insertMany([{},{}]);
-//to update some data :- collection.updateOne({name:"raj"},{"$set":{}})
-//to update some data :- collection.updateMany({name:"raj"},{"$set":{}});
-//to delete some data :- collection.deleteOne({name:"raj"});
-//to delete some data :- collection.deleteMany({name:"raj"});
 
 let login = (req, res) => {
     res.send("login done")
@@ -33,3 +34,14 @@ let getalluser = async (req, res) => {
 }
 
 module.exports = { register, login, logout, getalluser }
+
+
+// basic server
+// how to create an api
+// middleware
+// rotuing (app.method, app.use,app.all, router.method(in rotues file))
+// req , res , next
+// serving static files
+// how to install nd setup mongodb
+// how to conect mongobdriver with nodejs
+// how to connect with mongoose driver

@@ -3,7 +3,7 @@ let router = express.Router();
 let userMidd = require("../middlewares/userMiddleware")
 
 const { register, login, logout, getalluser } = require("../controllers/userController");
-router.use(userMidd)
+
 
 router.post("/register", register);
 router.post("/getalluser", getalluser);

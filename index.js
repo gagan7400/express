@@ -2,6 +2,10 @@ let express = require("express");
 let cors = require("cors")
 let app = express();// express instance  
 
+let connectdb = require("./db/connectDB");
+connectdb(); //db connection setup
+
+
 app.use(cors()) //third-party ///Third-party middleware
 app.use(express.json()) //inbuilt //Built-in middleware
 app.use(express.text())
