@@ -42,12 +42,32 @@ let addProduct = async (req, res) => {
 
 let getAllProduct = async (req, res) => {
     try {
-        let products = await productModel.find();
+        // let products = await productModel.find();
+        let products = await productModel.find().sort({ price: 1 });
 
         res.status(200).json({
             success: true,
             message: "All products fetched successfully",
             data: products
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+let getproductbypage = async (req, res) => {
+    try {
+        let { page } = req.params;
+        let total = await productModel.countDocuments();
+        let products = await productModel.find().skip(2 * (page - 1)).limit(2);
+
+        res.status(200).json({
+            success: true,
+            message: "All products fetched successfully",
+            data: { products, page, total }
         });
 
     } catch (error) {
@@ -266,14 +286,15 @@ module.exports = {
     getAllProduct,
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getproductbypage
 };
 
 // CRUD:
-Create - insertOne, insertMany, create
-Read - find, findOne, findById
-Update - updateOne, updateMany, findByIdAndUpdate
-Delete - deleteOne, deleteMany, findByIdAndDelete;
+// Create - insertOne, insertMany, create
+// Read - find, findOne, findById
+// Update - updateOne, updateMany, findByIdAndUpdate
+// Delete - deleteOne, deleteMany, findByIdAndDelete;
 
 // backend setup :- database connection ,
 // models , routes ,controllers,

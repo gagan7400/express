@@ -5,13 +5,15 @@ let {
     getAllProduct,
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct ,
+    getproductbypage
 } = require("../controllers/productController");
 
 
 router.post("/addproduct", addProduct);
 
 router.get("/getallproduct", getAllProduct);
+router.get("/pagination/:page", getproductbypage);
 
 router.get("/getproduct/:id", getProduct);
 
