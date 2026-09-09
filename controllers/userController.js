@@ -14,7 +14,7 @@ let register = async (req, res) => {
         let hashpassword = await bcrypt.hash(password, 10);
         //$2b$10$I5iyKNh.dy3Jfq.0.uBdVOo1dhZ7XEoXkOdK.2Oumkbc6a663xB4u
         //Ga@8gggh
-        let newuser = await userModel.insertOne({ name, email, password: hashpassword, state, mobilenumber });
+        let newuser = await userModel.insertOne({ name, email, password: hashpassword, state, mobilenumber }).createIndex({ "email": 1 });
 
         // let newuser = await userModel.create({ name, email, password });
         // await newuser.save();
