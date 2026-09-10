@@ -1,4 +1,5 @@
 let productModel = require("../models/productModel");
+const { MAILSEND } = require("../utils/SendEmail");
 let addProduct = async (req, res) => {
     try {
         // let { name, price, category, description, quantity } = req.body;
@@ -13,7 +14,7 @@ let addProduct = async (req, res) => {
 
         // to insert the data ,we have create query , insertOne, insertMany query.
          
-        let newProduct = await productModel.insertMany([...req.body]).createIndex({"name":1});
+        let newProduct = await productModel.insertMany([...req.body]);
         
         // let newProduct = await productModel.insertOne({ name, price, category, description, quantity });
 
@@ -25,6 +26,7 @@ let addProduct = async (req, res) => {
         //     quantity,
         // });
         // await newProduct.save();
+        await MAILSEND(process.env.GMAIL,"Product Update","new product added" ,"<h1> new product added</h1>")
         res.status(201).json({
             success: true,
             message: "Product added successfully",
@@ -111,7 +113,6 @@ let getAllProduct = async (req, res) => {
     }
 };
 
-
 let getproductbypage = async (req, res) => {
     try {
         let { page } = req.params;
@@ -131,9 +132,6 @@ let getproductbypage = async (req, res) => {
         });
     }
 };
-
-
-
 
 let getProduct = async (req, res) => {
     try {
@@ -162,8 +160,6 @@ let getProduct = async (req, res) => {
         });
     }
 };
-
-
 
 // let updateProduct = async (req, res) => {
 //     try {
@@ -254,7 +250,6 @@ let updateProduct = async (req, res) => {
     }
 };
 
-
 // let deleteProduct = async (req, res) => {
 //     try {
 //         let { id } = req.params;
@@ -334,7 +329,6 @@ let deleteProduct = async (req, res) => {
         });
     }
 };
-
 
 module.exports = {
     addProduct,
