@@ -10,7 +10,9 @@ let addProduct = async (req, res) => {
         //         message: "Please provide all the details"
         //     });
         // }
+ 
 
+        
 
         // to insert the data ,we have create query , insertOne, insertMany query.
          
