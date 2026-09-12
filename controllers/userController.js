@@ -1,6 +1,7 @@
 let bcrypt = require("bcrypt");
 let userModel = require("../models/userModel");
 const { MAILSEND } = require("../utils/SendEmail");
+const { createtoken } = require("../utils/jwttoken");
 let register = async (req, res) => {
     try {
         let { name, email, password, state, mobilenumber } = req.body;
@@ -38,7 +39,10 @@ let login = async (req, res) => {
         if (!isMatch) {
             return res.status(404).json({ success: false, message: "pls provide valid credentials" })
         }
-     await MAILSEND(email, "LOGIN", "Login successfully done" , `<!DOCTYPE html>
+        let token = await createtoken({ id: user._id })
+
+        res.status(200).json({ sucess: true, message: "login successfull", token })
+        await MAILSEND(email, "LOGIN", "Login successfully done", `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -153,8 +157,6 @@ let login = async (req, res) => {
 </body>
 </html>
 `)
-        res.status(200).json({ sucess: true, message: "login successfull" })
-
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
     }

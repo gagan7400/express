@@ -1,6 +1,6 @@
 let mongoose = require("mongoose");
 let validator = require("validator");
-let userSchema = new mongoose.Schema({
+let adminSchema = new mongoose.Schema({
     name: {
         type: String,
         maxlength: 20,
@@ -8,7 +8,6 @@ let userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-
     },
     email: {
         type: String,
@@ -20,26 +19,11 @@ let userSchema = new mongoose.Schema({
         required: true,
         validate: [validator.isStrongPassword, "password must be strong"]
     },
-    mobilenumber: {
+    role: {
         type: String,
-        validate: {
-            validator: function (v) {
-                return validator.isMobilePhone(v, "en-IN")
-            },
-            message: "pls provide valid phone number"
-        }
-    },
-    address: {
-        type: String,
-    },
-    age: {
-        type: Number
-    },
-    gender: {
-        type: String
+        default: "user"
     }
 }, { timestamps: true });
-let userModel = mongoose.model("users", userSchema);
-// model("collectionname","schemaobject")
+let adminModel = mongoose.model("admins", adminSchema);
 
-module.exports = userModel;
+module.exports = adminModel;

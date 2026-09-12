@@ -30,8 +30,3 @@ app.use((err, req, res, next) => {
 app.listen(8000, (err) => {
     console.log(err || "server run on port 8000")
 });
-
-
-// Drivers:
-// mongodb Drivers
-// mongoose driver 
