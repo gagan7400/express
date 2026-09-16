@@ -20,6 +20,9 @@ let userSchema = new mongoose.Schema({
         required: true,
         validate: [validator.isStrongPassword, "password must be strong"]
     },
+    profileimage: {
+        url: String, name: String
+    },
     mobilenumber: {
         type: String,
         validate: {

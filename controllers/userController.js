@@ -5,7 +5,7 @@ const { createtoken } = require("../utils/jwttoken");
 let register = async (req, res) => {
     try {
         let { name, email, password, state, mobilenumber } = req.body;
-        if (!name || !email || !password || !state || !mobilenumber) {
+        if (!name || !email || !password || !mobilenumber) {
             return res.status(404).json({ success: false, message: "pls provide all the details" })
         }
 
@@ -14,8 +14,13 @@ let register = async (req, res) => {
             return res.status(404).json({ success: false, message: "email already exist" })
         }
         let hashpassword = await bcrypt.hash(password, 10);
+        console.log(req.file);
+        let profileimage = { url: "", name: "" }
+        if (req.file) {
+            profileimage = { url: process.env.BACKENDURL + req.file.filename, name: req.file.filename }
+        }
 
-        let newuser = await userModel.insertOne({ name, email, password: hashpassword, state, mobilenumber });
+        let newuser = await userModel.insertOne({ name, email, password: hashpassword, state, mobilenumber, profileimage });
         await MAILSEND(email, "Registration", "RegistrationDone", "<h1> DONE </h1>")
         res.status(200).json({ success: true, message: "registration done", data: newuser })
     } catch (error) {
