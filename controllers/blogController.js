@@ -15,6 +15,15 @@ let newblog = async (req, res) => {
     }
 }
 
+let getblog = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let blog = await blogModel.findById(id);
+        res.status(200).json({ success: true, message: "done", data: blog })
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
+}
 let allblogs = async (req, res) => {
     try {
         let blogs = await blogModel.find();
@@ -39,6 +48,19 @@ let deleteblog = async (req, res) => {
         res.status(500).json({ success: false, message: error.message })
     }
 }
+let updateblog = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let blog = await blogModel.findById(id);
+        if (!blog) {
+            return res.status(400).json({ sucess: false, message: "blog already deleted or not found" })
+        };
 
+        let newblog = await blogModel.findByIdAndUpdate(id, { ...req.body });
+        res.status(200).json({ success: true, message: "update blog done", newblog })
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
+}
 
-module.exports = { newblog, allblogs, deleteblog }
+module.exports = { newblog, allblogs, deleteblog, updateblog, getblog }
