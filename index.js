@@ -30,19 +30,4 @@ app.use((err, req, res, next) => {
 app.listen(8000, (err) => {
     console.log(err || "server run on port 8000")
 });
-// xyz.com
-
-// to upload images on backend ,we have to use the multer middleware to process the files(images and all).
-// first it upload the image on backend and then it gives you the new url.
-
-// backend :- we are using expressjs for our backend
-//  API + Database + Mail(service) + file uploader(service ,multer);
-// index.js :- server basic setup + db connect  +port listen
-
-
-// API: -
-//  Route /path + middleware + controllers + models;
-
-// User(login ,register ,logout , profile) ,
-// Product (addproduct ,get ,delete ,update ),
-//  Blog (addblog ,get ,delete ,update ),
+ 
